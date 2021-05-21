@@ -536,7 +536,7 @@ def blob_log(image, min_sigma=1, max_sigma=50, num_sigma=10, threshold=.2,
 
 
 def blob_doh(image, min_sigma=1, max_sigma=30, num_sigma=10, threshold=0.01,
-             overlap=.5, log_scale=False):
+             overlap=.5, log_scale=False, num_peaks=np.inf):
     """Finds blobs in the given grayscale image.
 
     Blobs are found using the Determinant of Hessian method [1]_. For each blob
@@ -634,7 +634,8 @@ def blob_doh(image, min_sigma=1, max_sigma=30, num_sigma=10, threshold=0.01,
     local_maxima = peak_local_max(image_cube, threshold_abs=threshold,
                                   footprint=np.ones((3,) * image_cube.ndim),
                                   threshold_rel=0.0,
-                                  exclude_border=False)
+                                  exclude_border=False,
+                                  num_peaks = num_peaks)
 
     # Catch no peaks
     if local_maxima.size == 0:
